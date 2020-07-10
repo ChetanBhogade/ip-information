@@ -1,21 +1,46 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import React, { useState, useEffect } from "react";
+import {
+  StyleSheet,
+  View,
+  TouchableWithoutFeedback,
+  Keyboard,
+  Text,
+} from "react-native";
+import MyAppBar from "./components/MyAppBar";
+import InputSection from "./components/InputSection";
+import OutputSection from "./components/OutputSection";
 
 export default function App() {
+  const [ipAddr, setIpAddr] = useState();
+
+  const handleInput = (ip) => {
+    setIpAddr(ip);
+  };
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+    <View style={styles.mainScreen}>
+      <MyAppBar />
+      <TouchableWithoutFeedback
+        onPress={() => {
+          Keyboard.dismiss();
+        }}
+      >
+        <View style={styles.contentScreen}>
+          <InputSection submitIP={handleInput} />
+          <OutputSection ip={ipAddr} />
+        </View>
+      </TouchableWithoutFeedback>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+  mainScreen: {
+    // flex: 1,
+  },
+  contentScreen: {
+    margin: 15,
+    justifyContent: "center",
   },
 });
